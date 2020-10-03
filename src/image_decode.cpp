@@ -818,11 +818,17 @@ namespace bimg
 			: _dstFormat
 			;
 
+        // TODO: hack for dealing with 32bit output from stb HDR files
+        if (_dstFormat == TextureFormat::RGBA32F)
+        {
+            _dstFormat = TextureFormat::RGBA16F;
+        }
+
 		if (_dstFormat == input->m_format)
 		{
 			return input;
 		}
-
+        
 		ImageContainer* output = imageConvert(_allocator, _dstFormat, *input);
 		imageFree(input);
 
